@@ -1,6 +1,6 @@
 OS := $(shell uname)
 CC = cc
-CFLAGS = -g -O2
+CFLAGS = -std=c99 -g -O2
 
 ifeq ($(OS),Darwin)
   LIBS=-framework OpenCL
@@ -13,7 +13,7 @@ SOURCES := $(wildcard *.c)
 OBJECTS := $(SOURCES:%.c=$(OBJDIR)/%.o)
 
 $(OBJDIR)/multiply_arrays: $(OBJECTS)
-	$(CC) -std=c99 $^ $(LIBS) $(CFLAGS) -o $@
+	$(CC) $(LIBS) $(CFLAGS) -o $@ $^
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(OBJDIR)
@@ -21,4 +21,4 @@ $(OBJDIR)/%.o: %.c
 
 .PHONY: clean
 clean:
-	rm -rf ./*.o target
+	@rm -rf $(OBJDIR)
